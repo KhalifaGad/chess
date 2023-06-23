@@ -1,5 +1,16 @@
-<div class="container">
+<div class="container" *ngIf="!gameMode; else playing">
   <h1> Welcome to your chess boards! </h1>
-  <button class="offline-btn" >PLay offline</button>
-  <button class="online-btn" >Play online</button>
+  <button class="offline-btn" (click)="goOffline()" >PLay offline</button>
+  <button class="online-btn" (click)="goOnline()" >Play online</button>
 </div>
+
+<ng-template #playing>
+  <nav class="nav" >
+    <a routerLink="/offline" routerLinkActive="active" ariaCurrentWhenActive="page">Go Offline</a>
+    <a routerLink="/online" routerLinkActive="active" ariaCurrentWhenActive="page">Go Online</a>
+  </nav>
+</ng-template>
+
+<router-outlet></router-outlet>
+
+

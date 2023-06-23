@@ -31,3 +31,10 @@
   flex-direction: column;
   gap: $gap;
 }
+
+@mixin row($gap: 1rem, $width: 100%) {
+  display: flex;
+  flex-direction: row;
+  gap: $gap;
+  width: $width;
+}
