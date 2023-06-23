@@ -1,0 +1,26 @@
+@import 'src/styles/variables.scss';
+@import 'src/styles/mixins.scss';
+
+.container {
+  @include stack(1rem);
+  text-align: center;
+  align-items: center;
+  width: 50%;
+  padding: 4vh 2vw;
+  border: 1px solid $gray300;
+  border-radius: $rounded-easy;
+  background-color: $white;
+  margin: 20vh auto;
+}
+
+.container h1 {
+  color: $primary;
+}
+
+.offline-btn {
+  @include btn-outline(20vw);
+}
+
+.online-btn {
+  @include btn-solid(20vw);
+}

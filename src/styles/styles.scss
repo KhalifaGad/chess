@@ -1,0 +1,36 @@
+@import './variables';
+@import './mixins';
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background-color: $gray100;
+  overflow: hidden;
+}
+
+.btn {
+  color: white;
+  border-radius: $rounded-easy;
+  border: 1px solid transparent;
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $shadow-sx;
+  cursor: pointer;
+}
+
+.btn-solid {
+  background-color: $primary;
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: $gray700;
+  border-color: $gray300;
+}
+
+

@@ -1,0 +1,33 @@
+@import './variables';
+
+@mixin btn($width: fit-content, $height: 40px) {
+  color: white;
+  border-radius: $rounded-easy;
+  border: 1px solid transparent;
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $shadow-sx;
+  cursor: pointer;
+  width: $width;
+  height: $height;
+}
+
+@mixin btn-solid($width: fit-content, $height: 40px) {
+  @include btn($width, $height);
+  background-color: $primary;
+}
+
+@mixin btn-outline($width: fit-content, $height: 40px) {
+  @include btn($width, $height);
+  background-color: transparent;
+  color: $gray700;
+  border-color: $gray300;
+}
+
+@mixin stack($gap: 1rem) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
