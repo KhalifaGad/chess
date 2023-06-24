@@ -1,1 +1,7 @@
-<p>offline works!</p>
+<div class="offline-container">
+  <div>
+    <iframe #lightSide (load)="lightSideLoadListener()" [src]="iframeURL"></iframe>
+    <iframe #darkSide (load)="darkSideLoadListener()" [src]="iframeURL"></iframe>
+  </div>
+  <button (click)="newGame()" *ngIf="isGameFinished">New Game</button>
+</div>

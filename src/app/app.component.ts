@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from "@angular/router";
-import { GameMode } from "src/app/types";
+import { Event, NavigationEnd, Router } from "@angular/router";
+import { APP_TEMPLATE } from "src/app/types";
 
 @Component({
   selector: 'app-root',
@@ -9,28 +9,31 @@ import { GameMode } from "src/app/types";
 })
 export class AppComponent {
   title = 'chess';
-  gameMode?: GameMode;
+  appTemplate: APP_TEMPLATE = APP_TEMPLATE.WELCOME;
+  protected readonly APP_TEMPLATE = APP_TEMPLATE;
 
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const currentUrl = event.url;
-        // Perform logic based on the current URL to determine if the section should be displayed
-        this.gameMode = this.urlToPlayMode(currentUrl);
-      }
-    });
+  constructor(private router: Router) {
   }
 
-  urlToPlayMode(url: string) {
-    if(url.includes('offline')) {
-      return GameMode.OFFLINE;
-    }
-    if(url.includes('online')) {
-      return GameMode.ONLINE;
-    }
-    return undefined;
+  ngOnInit() {
+    this.router.events.subscribe(this.onRouterEvent.bind(this));
+  }
+
+  onRouterEvent(event: Event) {
+    if (!(event instanceof NavigationEnd)) return;
+
+    const currentUrl = event.url;
+    this.appTemplate = this.urlToTemplate(currentUrl);
+  }
+
+  urlToTemplate(url: string) {
+    return {
+      '': APP_TEMPLATE.WELCOME,
+      '/': APP_TEMPLATE.WELCOME,
+      '/mainpage': APP_TEMPLATE.WITH_NAV,
+      '/online': APP_TEMPLATE.WITH_NAV,
+      '/iframepage': APP_TEMPLATE.SIMPLE,
+    }[url] ?? APP_TEMPLATE.WELCOME;
   }
 
   goOnline() {
@@ -38,7 +41,6 @@ export class AppComponent {
   }
 
   goOffline() {
-    void this.router.navigate(['/offline']);
+    void this.router.navigate(['/mainpage']);
   }
-
 }

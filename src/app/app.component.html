@@ -1,15 +1,14 @@
-<div class="container" *ngIf="!gameMode; else playing">
+<div *ngIf="appTemplate === APP_TEMPLATE.WELCOME" class="app-container">
   <h1> Welcome to your chess boards! </h1>
-  <button class="offline-btn" (click)="goOffline()" >PLay offline</button>
-  <button class="online-btn" (click)="goOnline()" >Play online</button>
+  <button (click)="goOffline()" class="offline-btn">PLay offline</button>
+  <button (click)="goOnline()" class="online-btn">Play online</button>
 </div>
 
-<ng-template #playing>
-  <nav class="nav" >
-    <a routerLink="/offline" routerLinkActive="active" ariaCurrentWhenActive="page">Go Offline</a>
-    <a routerLink="/online" routerLinkActive="active" ariaCurrentWhenActive="page">Go Online</a>
-  </nav>
-</ng-template>
+<nav *ngIf="appTemplate === APP_TEMPLATE.WITH_NAV" class="app-nav">
+  <a ariaCurrentWhenActive="page" routerLink="/mainpage" routerLinkActive="active">Go Offline</a>
+  <a ariaCurrentWhenActive="page" routerLink="/online" routerLinkActive="active">Go Online</a>
+</nav>
+
 
 <router-outlet></router-outlet>
 

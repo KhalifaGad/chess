@@ -1,7 +1,7 @@
 @import 'src/styles/variables.scss';
 @import 'src/styles/mixins.scss';
 
-.container {
+.app-container {
   @include stack(1rem);
   text-align: center;
   align-items: center;
@@ -11,21 +11,22 @@
   border-radius: $rounded-easy;
   background-color: $white;
   margin: 20vh auto;
+
+  h1 {
+    color: $primary;
+  }
+
+  .offline-btn {
+    @include btn-outline(20vw);
+  }
+
+  .online-btn {
+    @include btn-solid(20vw);
+  }
 }
 
-.container h1 {
-  color: $primary;
-}
 
-.offline-btn {
-  @include btn-outline(20vw);
-}
-
-.online-btn {
-  @include btn-solid(20vw);
-}
-
-.nav {
+.app-nav {
   @include row(1rem);
   height: 4vh;
   background-color: rgba(235, 77, 112, 0.7);
