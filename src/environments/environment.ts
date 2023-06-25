@@ -9,5 +9,5 @@ export const environment = {
     messagingSenderId: '',
     measurementId: '',
   },
-  host: '',
+  host: 'http://localhost:4200/',
 };
