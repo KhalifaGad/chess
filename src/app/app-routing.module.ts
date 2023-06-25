@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OfflineBoardComponent } from "src/app/offline-board/offline-board.component";
-import { OfflineComponent } from "src/app/offline/offline.component";
-import { OnlineComponent } from "src/app/online/online.component";
+import { OfflineBoardComponent, OfflineComponent } from "src/app/components/offline";
+import { OnlineComponent } from "src/app/components/online/online.component";
 
 const routes: Routes = [
-  { path: 'mainpage', component: OfflineComponent },
-  { path: 'iframepage', component: OfflineBoardComponent },
+  { path: 'offline', component: OfflineComponent, },
+  { path: 'offline-board', component: OfflineBoardComponent },
   { path: 'online', component: OnlineComponent },
 ]
 

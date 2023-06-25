@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "chess-12794": {
+      "hosting": {
+        "chess": [
+          "chess-12794"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "chess-12794"
+  }
+}

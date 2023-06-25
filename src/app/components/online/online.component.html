@@ -1,0 +1,10 @@
+<div>
+  <h4 *ngIf="!!error">{{ error }}</h4>
+
+  <board #board
+         (onMoveEvent)="onMoveChange($event)"
+         [isLightSide]="isLightSide"
+         [shouldPlay]="shouldPlay"/>
+
+</div>
+

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MoveChange, NgxChessBoardView } from "ngx-chess-board";
 import { BoardEvent } from "src/app/types";
 
@@ -7,10 +7,9 @@ import { BoardEvent } from "src/app/types";
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent implements OnChanges {
+export class BoardComponent {
   @Input() shouldPlay = false;
-  @Input() isLightSide = true;
-  @Input() lastOpponentMove?: string;
+  @Input() isLightSide: boolean | null = null;
   @Output() onMoveEvent: EventEmitter<BoardEvent> = new EventEmitter<BoardEvent>();
 
   @ViewChild('board', { static: false }) board!: NgxChessBoardView;
@@ -19,14 +18,8 @@ export class BoardComponent implements OnChanges {
     this.onMoveEvent.emit(event as any as BoardEvent);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const newValue = changes['lastOpponentMove']?.currentValue;
-    if (newValue) {
-      this.simulateMove(newValue);
-    }
-  }
-
-  simulateMove(move: string) {
+  simulateMove(move?: string) {
+    if (!move) return;
     this.board.move(move);
   }
 

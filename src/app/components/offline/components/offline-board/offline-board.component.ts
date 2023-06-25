@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
-import { BoardComponent } from "src/app/board/board.component";
+import { BoardComponent } from "src/app/components/board/board.component";
+import { LocalDataPersistenceService } from "src/app/services";
 import { BoardEvent, GameState, OfflineManagerEvent, OfflineManagerEventName } from "src/app/types";
 import { GAME_STATE_LOCAL_STORAGE_KEY } from "src/constants";
 
@@ -10,13 +11,12 @@ import { GAME_STATE_LOCAL_STORAGE_KEY } from "src/constants";
 })
 export class OfflineBoardComponent implements AfterViewInit {
   isLightSide = true;
-  shouldPlay: boolean | null = null;
-  lastOpponentMove?: string;
+  shouldPlay = false;
   isLastStateLoaded = false;
   loadedStateMoveColor = '';
   @ViewChild('board', { static: false }) board?: BoardComponent;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, private localDataService: LocalDataPersistenceService) {
   }
 
   get colorTurn() {
@@ -30,7 +30,7 @@ export class OfflineBoardComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (!this.board || this.isLastStateLoaded) return;
     this.isLastStateLoaded = true;
-    const stringifiedGameState = localStorage.getItem(GAME_STATE_LOCAL_STORAGE_KEY);
+    const stringifiedGameState = this.localDataService.get(GAME_STATE_LOCAL_STORAGE_KEY);
     if (!stringifiedGameState) return;
     const gameState: GameState = JSON.parse(stringifiedGameState);
     this.board?.setFEN(gameState.fen);
@@ -45,6 +45,18 @@ export class OfflineBoardComponent implements AfterViewInit {
     this.onOfflineEvent(event.data);
   }
 
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload(event: BeforeUnloadEvent) {
+    if (this.isLightSide) return;
+    const gameFEN = this.board?.getFEN();
+    if (!gameFEN) return;
+
+    this.localDataService.add(GAME_STATE_LOCAL_STORAGE_KEY, {
+      fen: gameFEN,
+      lastMoveColor: this.colorTurn,
+    });
+  }
+
   onOfflineEvent(event: OfflineManagerEvent) {
     if (event.eventName === OfflineManagerEventName.MOVE) {
       this.onMove(event);
@@ -57,7 +69,7 @@ export class OfflineBoardComponent implements AfterViewInit {
   }
 
   onMove(event: OfflineManagerEvent) {
-    this.lastOpponentMove = event.opponentMove;
+    this.board?.simulateMove(event.opponentMove);
     this.shouldPlay = true;
   }
 
@@ -84,15 +96,4 @@ export class OfflineBoardComponent implements AfterViewInit {
     window.parent.postMessage(event, '*');
   }
 
-  @HostListener('window:beforeunload', ['$event'])
-  onBeforeUnload(event: BeforeUnloadEvent) {
-    if (this.isLightSide) return;
-    const gameFEN = this.board?.getFEN();
-    if (!gameFEN) return;
-    const gameState: GameState = {
-      fen: gameFEN,
-      lastMoveColor: this.colorTurn,
-    }
-    localStorage.setItem(GAME_STATE_LOCAL_STORAGE_KEY, JSON.stringify(gameState));
-  }
 }

@@ -1,8 +1,8 @@
 <ngx-chess-board
   #board
   (moveChange)="onMoveChange($event)"
-  [darkDisabled]="isLightSide"
+  [darkDisabled]="!shouldPlay || !!isLightSide"
   [dragDisabled]="!shouldPlay"
   [drawDisabled]="!shouldPlay"
-  [lightDisabled]="!isLightSide"
+  [lightDisabled]="!shouldPlay || !isLightSide"
   [size]="500"/>

@@ -17,6 +17,7 @@ export enum OfflineManagerEventName {
   MOVE = "MOVE",
   RESET = "RESET",
   ASSIGN = "ASSIGN",
+  SYNC = "SYNC",
 }
 
 export interface OfflineManagerEvent {

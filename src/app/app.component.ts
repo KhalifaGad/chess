@@ -30,9 +30,9 @@ export class AppComponent {
     return {
       '': APP_TEMPLATE.WELCOME,
       '/': APP_TEMPLATE.WELCOME,
-      '/mainpage': APP_TEMPLATE.WITH_NAV,
+      '/offline': APP_TEMPLATE.WITH_NAV,
       '/online': APP_TEMPLATE.WITH_NAV,
-      '/iframepage': APP_TEMPLATE.SIMPLE,
+      '/offline-board': APP_TEMPLATE.SIMPLE,
     }[url] ?? APP_TEMPLATE.WELCOME;
   }
 
@@ -41,6 +41,6 @@ export class AppComponent {
   }
 
   goOffline() {
-    void this.router.navigate(['/mainpage']);
+    void this.router.navigate(['/offline']);
   }
 }

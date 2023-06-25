@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "chess",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

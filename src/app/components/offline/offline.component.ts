@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { LocalDataPersistenceService } from "src/app/services";
 import { BoardEvent, OfflineManagerEvent, OfflineManagerEventName } from "src/app/types";
 import { GAME_STATE_LOCAL_STORAGE_KEY } from "src/constants";
 import { environment } from "src/environments/environment";
@@ -16,7 +17,7 @@ export class OfflineComponent {
   iframeURL: SafeResourceUrl = this.getBoardSafeUrl();
   isGameFinished = false;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private localDataService: LocalDataPersistenceService) {
   }
 
   @HostListener('window:message', ['$event'])
@@ -83,13 +84,13 @@ export class OfflineComponent {
       eventName: OfflineManagerEventName.RESET,
       isLightSide: false
     }, this.iframeURL);
-    
+
     this.isGameFinished = false;
-    localStorage.removeItem(GAME_STATE_LOCAL_STORAGE_KEY);
+    this.localDataService.remove(GAME_STATE_LOCAL_STORAGE_KEY);
   }
 
   getBoardSafeUrl() {
-    const OFFLINE_BOARD_URL = `${environment.host}/iframepage`
+    const OFFLINE_BOARD_URL = `${environment.host}/offline-board`
     return this.sanitizer.bypassSecurityTrustResourceUrl(OFFLINE_BOARD_URL);
   }
 }
