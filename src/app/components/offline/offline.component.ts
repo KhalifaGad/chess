@@ -18,6 +18,7 @@ export class OfflineComponent {
   isGameFinished = false;
 
   constructor(private sanitizer: DomSanitizer, private localDataService: LocalDataPersistenceService) {
+    console.log('environment', environment);
   }
 
   @HostListener('window:message', ['$event'])

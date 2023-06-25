@@ -11,7 +11,6 @@ import { BoardComponent } from './components/board/board.component';
 import { OfflineBoardComponent, OfflineComponent } from './components/offline';
 import { OnlineComponent } from './components/online/online.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
